@@ -35,9 +35,9 @@ class AuthTask extends AsyncTask<Void, Void, Void> {
         if ( responseCode == HttpsURLConnection.HTTP_OK ) {
             authProvider.postAuthResponse(response);
         }
-//        else if ( responseCode == HttpsURLConnection.HTTP_UNAUTHORIZED ) {
-//            activity.onAuthFailure();
-//        }
+        else {
+            authProvider.postAuthError(responseCode);
+        }
     }
 
     @Override

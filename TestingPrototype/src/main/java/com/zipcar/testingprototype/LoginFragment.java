@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment{
 
     @Subscribe
     public void onAuthResponse (AuthResponseEvent event) {
-        Toast.makeText(getActivity(), event.success() ? "successful login" : "unsuccessful login attempt", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), event.success() ? "successful login" : "unsuccessful login attempt, code: " + event.getResponseCode(), Toast.LENGTH_LONG).show();
     }
 
 }

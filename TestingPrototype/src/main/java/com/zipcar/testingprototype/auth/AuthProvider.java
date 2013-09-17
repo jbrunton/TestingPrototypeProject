@@ -17,4 +17,13 @@ public class AuthProvider {
 
         MessageBus.get().post(event);
     }
+
+    public void postAuthError (int responseCode) {
+        AuthResponseEvent event = new AuthResponseEvent.Builder()
+                .setResponseCode(responseCode)
+                .getInstance();
+
+        MessageBus.get().post(event);
+    }
+
 }
