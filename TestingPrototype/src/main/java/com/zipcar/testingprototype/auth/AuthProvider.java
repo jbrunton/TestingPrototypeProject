@@ -7,7 +7,7 @@ public class AuthProvider {
 
     @Subscribe
     public void onAuthenticate (AuthenticateEvent event) {
-
+        new AuthTask(this, event.getUsername(), event.getPassword()).execute();
     }
 
     public void postAuthResponse (AuthResponse response) {
