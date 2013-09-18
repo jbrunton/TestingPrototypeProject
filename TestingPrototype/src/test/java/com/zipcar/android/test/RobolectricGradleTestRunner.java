@@ -1,4 +1,4 @@
-package com.example;
+package com.zipcar.android.test;
 
 import org.junit.runners.model.InitializationError;
 import org.robolectric.AndroidManifest;
