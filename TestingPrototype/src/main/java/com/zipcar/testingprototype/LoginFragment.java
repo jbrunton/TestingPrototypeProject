@@ -18,31 +18,31 @@ import com.zipcar.testingprototype.shared.MessageBus;
 
 public class LoginFragment extends Fragment{
 
+    private EditText username;
+    private EditText password;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        final EditText username = (EditText) view.findViewById(R.id.username);
-        final EditText password = (EditText) view.findViewById(R.id.password);
+        username = (EditText) view.findViewById(R.id.username);
+        password = (EditText) view.findViewById(R.id.password);
         Button loginButton = (Button) view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AuthenticateEvent event = new AuthenticateEvent.Builder()
-                        .setUserName(username.getText().toString())
-                        .setPassword(password.getText().toString())
-                        .getInstance();
-                MessageBus.get().post(event);
+                submit();
             }
         });
         return view;
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void submit () {
+        AuthenticateEvent event = new AuthenticateEvent.Builder()
+                .setUserName(username.getText().toString())
+                .setPassword(password.getText().toString())
+                .getInstance();
+        MessageBus.get().post(event);
     }
 
     @Override
@@ -69,6 +69,8 @@ public class LoginFragment extends Fragment{
             Toast.makeText(getActivity(), error.getServerReason(), Toast.LENGTH_LONG).show();
         } else if (error.getHttpErrorCode() > 0) {
             Toast.makeText(getActivity(), "There was an error contacting the server: " + error.getHttpErrorCode(), Toast.LENGTH_LONG).show();
+        } else {
+            throw new RuntimeException("Invalid HTTP error code");
         }
     }
 
