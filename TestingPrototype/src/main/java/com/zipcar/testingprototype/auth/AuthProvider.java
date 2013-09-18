@@ -1,6 +1,8 @@
 package com.zipcar.testingprototype.auth;
 
 import com.squareup.otto.Subscribe;
+import com.zipcar.testingprototype.data.DataErrorEvent;
+import com.zipcar.testingprototype.models.AuthToken;
 import com.zipcar.testingprototype.shared.MessageBus;
 
 public class AuthProvider {
@@ -10,20 +12,21 @@ public class AuthProvider {
         new AuthTask(this, event.getUsername(), event.getPassword()).execute();
     }
 
-    public void postAuthResponse (AuthResponse response) {
-        AuthResponseEvent event = new AuthResponseEvent.Builder()
-                .setSuccess(response.getSuccess())
-                .getInstance();
+    protected AuthToken modelify(AuthResponse response) {
+        return new AuthToken(response.getSession().getToken());
+    }
 
-        MessageBus.get().post(event);
+    public void postAuthResponse (AuthResponse response) {
+        if (response.getSuccess()) {
+            AuthToken token = modelify(response);
+            MessageBus.get().post(token);
+        } else {
+            MessageBus.get().post(new DataErrorEvent<AuthToken>(response.getReason(), null));
+        }
     }
 
     public void postAuthError (int responseCode) {
-        AuthResponseEvent event = new AuthResponseEvent.Builder()
-                .setResponseCode(responseCode)
-                .getInstance();
-
-        MessageBus.get().post(event);
+        MessageBus.get().post(new DataErrorEvent<AuthToken>(responseCode, null));
     }
 
 }
