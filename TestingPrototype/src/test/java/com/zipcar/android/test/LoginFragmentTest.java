@@ -10,6 +10,7 @@ import com.zipcar.testingprototype.ListActivity;
 import com.zipcar.testingprototype.LoginFragment;
 import com.zipcar.testingprototype.data.DataErrorEvent;
 import com.zipcar.testingprototype.models.Session;
+import com.zipcar.testingprototype.shared.AndroidModule;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +19,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowToast;
 
+import dagger.ObjectGraph;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.robolectric.Robolectric.shadowOf;
@@ -25,6 +28,7 @@ import static org.robolectric.Robolectric.shadowOf;
 @RunWith(RobolectricGradleTestRunner.class)
 public class LoginFragmentTest {
     private LoginFragment fragment;
+    private ObjectGraph objectGraph;
 
     public static void startFragment( Fragment fragment )
     {
@@ -43,8 +47,11 @@ public class LoginFragmentTest {
     @Before
     public void setUp() {
         fragment = new LoginFragment();
+
+        objectGraph = ObjectGraph.create(new AndroidModule(null));
+        objectGraph.inject(fragment);
+
         startFragment(fragment);
-//        fragment.onCreate(null);
     }
 
     @Test
