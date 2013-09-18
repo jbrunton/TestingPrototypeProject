@@ -37,6 +37,10 @@ import dagger.Provides;
 public class AndroidModule {
     private final TestingApp application;
 
+    public AndroidModule() {
+        this.application = null;
+    }
+
     public AndroidModule(TestingApp application) {
         this.application = application;
     }
