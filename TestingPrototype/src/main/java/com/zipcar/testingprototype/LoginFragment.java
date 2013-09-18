@@ -17,6 +17,7 @@ import com.zipcar.testingprototype.models.Session;
 import com.zipcar.testingprototype.shared.MessageBus;
 
 public class LoginFragment extends Fragment{
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
@@ -36,6 +37,7 @@ public class LoginFragment extends Fragment{
         });
         return view;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
