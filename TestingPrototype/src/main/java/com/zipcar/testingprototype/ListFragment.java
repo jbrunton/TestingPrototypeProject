@@ -1,6 +1,5 @@
 package com.zipcar.testingprototype;
 
-import android.accounts.Account;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +9,9 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.zipcar.testingprototype.accounts.RefreshAccountsEvent;
+import com.zipcar.testingprototype.data.DataAvailableEvent;
 import com.zipcar.testingprototype.data.DataErrorEvent;
+import com.zipcar.testingprototype.models.Account;
 import com.zipcar.testingprototype.shared.MessageBus;
 
 import java.util.Collection;
@@ -44,9 +45,13 @@ public class
         MessageBus.get().register(this);
     }
 
+    protected void updateAccountsList(Collection<Account> accounts) {
+        // TODO: add accounts to list view
+    }
+
     @Subscribe
-    public void onAccountsAvailable(Collection<Account> accounts) {
-        // Toast.makeText(getActivity(), event.success() ? "we got an accounts list" : "we didn't get an accounts list", Toast.LENGTH_LONG).show();
+    public void onAccountsAvailable(DataAvailableEvent<Collection<Account>> event) {
+        updateAccountsList(event.getData());
     }
 
     @Subscribe
@@ -58,7 +63,7 @@ public class
         }
 
         if (error.getCachedData() != null) {
-            onAccountsAvailable(error.getCachedData());
+            updateAccountsList(error.getCachedData());
         }
     }
 

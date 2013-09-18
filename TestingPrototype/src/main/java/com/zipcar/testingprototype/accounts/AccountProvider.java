@@ -1,6 +1,7 @@
 package com.zipcar.testingprototype.accounts;
 
 import com.squareup.otto.Subscribe;
+import com.zipcar.testingprototype.data.DataAvailableEvent;
 import com.zipcar.testingprototype.data.DataErrorEvent;
 import com.zipcar.testingprototype.models.Account;
 import com.zipcar.testingprototype.models.Session;
@@ -33,7 +34,8 @@ public class AccountProvider {
 
     public void postAuthResponse (AccountResponse response) {
         if (response.getSuccess()) {
-            MessageBus.get().post(modelify(response.getAccounts()));
+            DataAvailableEvent<Collection<Account>> event = new DataAvailableEvent<Collection<Account>>(modelify(response.getAccounts()));
+            MessageBus.get().post(event);
         } else {
             MessageBus.get().post(new DataErrorEvent<Collection<Account>>(response.getReason(), null));
         }
