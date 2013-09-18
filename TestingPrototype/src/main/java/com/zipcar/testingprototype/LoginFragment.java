@@ -10,16 +10,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.zipcar.testingprototype.auth.AuthenticateEvent;
 import com.zipcar.testingprototype.data.DataErrorEvent;
 import com.zipcar.testingprototype.models.Session;
-import com.zipcar.testingprototype.shared.MessageBus;
+import com.zipcar.testingprototype.shared.BaseFragment;
+import com.zipcar.testingprototype.shared.BaseListFragment;
 
-public class LoginFragment extends Fragment{
+import javax.inject.Inject;
+
+public class LoginFragment extends BaseFragment {
 
     private EditText username;
     private EditText password;
+
+    @Inject protected Bus bus;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,19 +48,19 @@ public class LoginFragment extends Fragment{
                 .setUserName(username.getText().toString())
                 .setPassword(password.getText().toString())
                 .getInstance();
-        MessageBus.get().post(event);
+        bus.post(event);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        MessageBus.get().unregister(this);
+        bus.unregister(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        MessageBus.get().register(this);
+        bus.register(this);
     }
 
     @Subscribe

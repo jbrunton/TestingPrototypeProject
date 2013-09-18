@@ -33,6 +33,8 @@ dependencies {
     compile 'com.squareup:otto:1.3.4'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.squareup.okhttp:okhttp:1.1.1'
+    compile 'com.squareup.dagger:dagger:1.1.0'
+    compile 'com.squareup.dagger:dagger-compiler:1.1.0'
 
     testCompile 'junit:junit:4.10'
     testCompile 'org.robolectric:robolectric:2.1'

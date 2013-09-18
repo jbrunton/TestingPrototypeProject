@@ -4,16 +4,21 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.zipcar.testingprototype.accounts.RefreshAccountsEvent;
 import com.zipcar.testingprototype.data.DataAvailableEvent;
 import com.zipcar.testingprototype.data.DataErrorEvent;
 import com.zipcar.testingprototype.models.Account;
-import com.zipcar.testingprototype.shared.MessageBus;
+import com.zipcar.testingprototype.shared.BaseListFragment;
 
 import java.util.Collection;
 
-public class AccountsListFragment extends android.support.v4.app.ListFragment{
+import javax.inject.Inject;
+
+public class AccountsListFragment extends BaseListFragment {
+
+    @Inject protected Bus bus;
 
     private ArrayAdapter<Account> adapter;
 
@@ -30,14 +35,14 @@ public class AccountsListFragment extends android.support.v4.app.ListFragment{
     @Override
     public void onPause() {
         super.onPause();
-        MessageBus.get().unregister(this);
+        bus.unregister(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        MessageBus.get().register(this);
-        MessageBus.get().post(new RefreshAccountsEvent());
+        bus.register(this);
+        bus.post(new RefreshAccountsEvent());
     }
 
     protected void updateAccountsList(Collection<Account> accounts) {
