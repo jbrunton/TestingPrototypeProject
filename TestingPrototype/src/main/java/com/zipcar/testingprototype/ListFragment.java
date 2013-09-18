@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+import com.zipcar.testingprototype.accounts.RefreshAccountsEvent;
 import com.zipcar.testingprototype.data.DataErrorEvent;
 import com.zipcar.testingprototype.shared.MessageBus;
 
@@ -28,6 +29,7 @@ public class
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        MessageBus.get().post(new RefreshAccountsEvent());
     }
 
     @Override

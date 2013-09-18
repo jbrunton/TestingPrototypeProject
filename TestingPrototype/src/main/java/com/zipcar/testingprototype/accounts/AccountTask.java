@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
+import com.zipcar.testingprototype.models.Session;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,12 +19,14 @@ import javax.net.ssl.HttpsURLConnection;
 class AccountTask extends AsyncTask<Void, Void, Void> {
 
     private AccountProvider accountProvider;
+    private Session session;
 
     private int responseCode;
     private AccountResponse response;
 
-    public AccountTask(final AccountProvider accountProvider) {
+    public AccountTask(final AccountProvider accountProvider, final Session session) {
         this.accountProvider = accountProvider;
+        this.session = session;
     }
 
     @Override
@@ -42,7 +45,7 @@ class AccountTask extends AsyncTask<Void, Void, Void> {
         try {
             HttpsURLConnection connection = (HttpsURLConnection) httpClient.open(new URL("https://" + "api.zipcar.com" + "/api/1.0.2/json//member/accounts"));
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Authorization", "Basic ");
+            connection.setRequestProperty("X-User-Session", session.getToken());
 
             responseCode = connection.getResponseCode();
 

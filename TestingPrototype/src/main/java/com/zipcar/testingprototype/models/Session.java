@@ -1,6 +1,6 @@
 package com.zipcar.testingprototype.models;
 
-public class AuthToken {
+public class Session {
     private String token;
     // TODO: expiry date
 
@@ -8,7 +8,7 @@ public class AuthToken {
         return token;
     }
 
-    public AuthToken(String token) {
+    public Session(String token) {
         this.token = token;
     }
 }

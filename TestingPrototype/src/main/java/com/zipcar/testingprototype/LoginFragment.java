@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 import com.zipcar.testingprototype.auth.AuthenticateEvent;
 import com.zipcar.testingprototype.data.DataErrorEvent;
-import com.zipcar.testingprototype.models.AuthToken;
+import com.zipcar.testingprototype.models.Session;
 import com.zipcar.testingprototype.shared.MessageBus;
 
 public class LoginFragment extends Fragment{
@@ -56,13 +56,13 @@ public class LoginFragment extends Fragment{
     }
 
     @Subscribe
-    public void onAuthTokenAvailable (AuthToken token) {
+    public void onSessionAvailable (Session session) {
         startActivity(new Intent(getActivity(), ListActivity.class));
         getActivity().finish();
     }
 
     @Subscribe
-    public void onAuthTokenError(DataErrorEvent<AuthToken> error) {
+    public void onSessionError(DataErrorEvent<Session> error) {
         if (error.getServerReason() != null) {
             Toast.makeText(getActivity(), error.getServerReason(), Toast.LENGTH_LONG).show();
         } else if (error.getHttpErrorCode() > 0) {
