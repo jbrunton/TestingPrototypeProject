@@ -32,10 +32,10 @@ class AccountTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void param) {
         if ( responseCode == HttpsURLConnection.HTTP_OK ) {
-//            accountProvider.postAuthResponse(response);
+            accountProvider.postResponse(response);
         }
         else {
-//            accountProvider.postAuthError(responseCode);
+            accountProvider.postError(responseCode);
         }
     }
 

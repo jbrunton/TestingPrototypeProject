@@ -22,7 +22,6 @@ public class
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        Toast.makeText(getActivity(), "This is the list of accounts . . .", Toast.LENGTH_LONG).show();
         return view;
     }
 
@@ -30,7 +29,6 @@ public class
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MessageBus.get().post(new RefreshAccountsEvent());
     }
 
     @Override
@@ -43,6 +41,7 @@ public class
     public void onResume() {
         super.onResume();
         MessageBus.get().register(this);
+        MessageBus.get().post(new RefreshAccountsEvent());
     }
 
     protected void updateAccountsList(Collection<Account> accounts) {
@@ -51,6 +50,7 @@ public class
 
     @Subscribe
     public void onAccountsAvailable(DataAvailableEvent<Collection<Account>> event) {
+        Toast.makeText(getActivity(), "This is the list of accounts . . .", Toast.LENGTH_LONG).show();
         updateAccountsList(event.getData());
     }
 

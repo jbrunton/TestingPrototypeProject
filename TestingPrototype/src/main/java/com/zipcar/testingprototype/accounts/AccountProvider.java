@@ -20,7 +20,7 @@ public class AccountProvider {
     }
 
     @Subscribe
-    public void onSessionAvailable(Session token) {
+    public void onSessionAvailable(Session session) {
         this.session = session;
     }
 
@@ -32,7 +32,7 @@ public class AccountProvider {
         return accounts;
     }
 
-    public void postAuthResponse (AccountResponse response) {
+    public void postResponse(AccountResponse response) {
         if (response.getSuccess()) {
             DataAvailableEvent<Collection<Account>> event = new DataAvailableEvent<Collection<Account>>(modelify(response.getAccounts()));
             MessageBus.get().post(event);
@@ -41,7 +41,7 @@ public class AccountProvider {
         }
     }
 
-    public void postAuthError (int errorCode) {
+    public void postError(int errorCode) {
         MessageBus.get().post(new DataErrorEvent<Collection<Account>>(errorCode, null));
     }
 
