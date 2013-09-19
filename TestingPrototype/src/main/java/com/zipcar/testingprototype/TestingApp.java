@@ -37,12 +37,6 @@ public class TestingApp extends Application {
         applicationGraph = ObjectGraph.create(getModules().toArray());
 
         applicationGraph.inject(this);
-
-        applicationGraph.inject(authProvider);
-        bus.register(authProvider);
-
-        applicationGraph.inject(accountProvider);
-        bus.register(accountProvider);
     }
 
     /**

@@ -13,16 +13,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import dagger.Provides;
 
+@Singleton
 public class AccountProvider {
     Session session;
     Collection<Account> accounts;
     AccountTask task;
 
+    protected final Bus bus;
+
     @Inject
-    protected Bus bus;
+    public AccountProvider(Bus bus) {
+        this.bus = bus;
+        bus.register(this);
+    }
 
     @Produce
     public DataAvailableEvent<Collection<Account>> produceAccounts() {

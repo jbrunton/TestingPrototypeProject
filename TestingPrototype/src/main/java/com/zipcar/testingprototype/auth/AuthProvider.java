@@ -6,11 +6,18 @@ import com.zipcar.testingprototype.data.DataErrorEvent;
 import com.zipcar.testingprototype.models.Session;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class AuthProvider {
 
+    protected final Bus bus;
+
     @Inject
-    protected Bus bus;
+    public AuthProvider(Bus bus) {
+        this.bus = bus;
+        bus.register(this);
+    }
 
     @Subscribe
     public void onAuthenticate (AuthenticateEvent event) {

@@ -58,14 +58,4 @@ public class AndroidModule {
     Bus provideBus() {
         return new Bus();
     }
-
-    @Provides @Singleton
-    AuthProvider provideAuthProvider() {
-        return new AuthProvider();
-    }
-
-    @Provides @Singleton
-    AccountProvider provideAccountProvider() {
-        return new AccountProvider();
-    }
 }
