@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import com.zipcar.testingprototype.accounts.RefreshAccountsEvent;
 import com.zipcar.testingprototype.data.DataAvailableEvent;
 import com.zipcar.testingprototype.data.DataErrorEvent;
 import com.zipcar.testingprototype.models.Account;
@@ -27,7 +27,17 @@ public class AccountsListFragment extends BaseListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
+
+        Spinner spinner = (Spinner) view.findViewById(R.id.accounts_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.accounts_name_string_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        return view;
     }
 
     @Override
@@ -38,6 +48,11 @@ public class AccountsListFragment extends BaseListFragment {
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1);
         setListAdapter(this.adapter);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

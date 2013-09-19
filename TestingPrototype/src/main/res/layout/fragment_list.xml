@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Spinner
-        android:id="@+id/account_picker"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:spinnerMode="dropdown"/>
-    <LinearLayout
-        android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/account_picker">
+        android:text="Welcome"
+        android:spinnerMode="dropdown"
+        android:contentDescription="Welcome message" />
+
+    <Spinner
+        android:id="@+id/accounts_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Account picker"
+        android:prompt="@string/account_spinner_text" />
+
         <ListView android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

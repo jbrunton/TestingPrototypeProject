@@ -8,4 +8,10 @@
     <string name="username_hint">Your username</string>
     <string name="password_hint">Your password</string>
     <string name="login_button_text">Login</string>
+    <string name="account_spinner_text">Account type</string>
+    <string-array name="accounts_name_string_array">
+        <item>Personal</item>
+        <item>Business</item>
+        <item>Other</item>
+    </string-array>
 </resources>

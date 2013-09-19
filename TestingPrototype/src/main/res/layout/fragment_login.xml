@@ -11,7 +11,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/username" />
+        android:text="@string/username"
+        android:contentDescription="Username field" />
 
     <EditText
         android:id="@+id/username"
@@ -25,7 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/password"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:contentDescription="Password field" />
 
     <EditText
         android:id="@+id/password"
