@@ -25,7 +25,7 @@ public class LoginFragment extends BaseFragment {
     private EditText username;
     private EditText password;
 
-    @Inject public Bus bus;
+    @Inject Bus bus;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

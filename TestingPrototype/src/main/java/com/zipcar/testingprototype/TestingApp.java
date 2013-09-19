@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.squareup.otto.Bus;
 import com.zipcar.testingprototype.accounts.AccountProvider;
+import com.zipcar.testingprototype.accounts.RefreshAccountsEvent;
 import com.zipcar.testingprototype.auth.AuthProvider;
 import com.zipcar.testingprototype.shared.AndroidModule;
 
@@ -42,7 +43,6 @@ public class TestingApp extends Application {
 
         applicationGraph.inject(accountProvider);
         bus.register(accountProvider);
-
     }
 
     /**

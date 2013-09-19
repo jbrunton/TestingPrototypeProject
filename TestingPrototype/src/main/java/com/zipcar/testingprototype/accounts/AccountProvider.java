@@ -1,6 +1,7 @@
 package com.zipcar.testingprototype.accounts;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 import com.zipcar.testingprototype.data.DataAvailableEvent;
 import com.zipcar.testingprototype.data.DataErrorEvent;
@@ -13,20 +14,37 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.Provides;
+
 public class AccountProvider {
     Session session;
+    Collection<Account> accounts;
+    AccountTask task;
 
     @Inject
     protected Bus bus;
 
+    @Produce
+    public DataAvailableEvent<Collection<Account>> produceAccounts() {
+        return new DataAvailableEvent<Collection<Account>>(accounts);
+    }
+
     @Subscribe
     public void onRefreshAccounts(RefreshAccountsEvent event) {
-        new AccountTask(this, session).execute();
+        refresh();
     }
 
     @Subscribe
     public void onSessionAvailable(Session session) {
         this.session = session;
+        refresh();
+    }
+
+    public void refresh() {
+        if (task == null) {
+            task = new AccountTask(this, session);
+            task.execute();
+        }
     }
 
     protected Collection<Account> modelify(Collection<AccountResponse.ZapiAccount> zapiAccounts) {
@@ -39,15 +57,17 @@ public class AccountProvider {
 
     public void postResponse(AccountResponse response) {
         if (response.getSuccess()) {
-            DataAvailableEvent<Collection<Account>> event = new DataAvailableEvent<Collection<Account>>(modelify(response.getAccounts()));
-            bus.post(event);
+            this.accounts = modelify(response.getAccounts());
+            bus.post(produceAccounts());
         } else {
             bus.post(new DataErrorEvent<Collection<Account>>(response.getReason(), null));
         }
+        task = null;
     }
 
     public void postError(int errorCode) {
         bus.post(new DataErrorEvent<Collection<Account>>(errorCode, null));
+        task = null;
     }
 
 }

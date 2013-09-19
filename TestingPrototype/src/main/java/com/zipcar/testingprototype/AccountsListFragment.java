@@ -42,13 +42,15 @@ public class AccountsListFragment extends BaseListFragment {
     public void onResume() {
         super.onResume();
         bus.register(this);
-        bus.post(new RefreshAccountsEvent());
     }
 
     protected void updateAccountsList(Collection<Account> accounts) {
-        this.adapter.clear();
-        for (Account acc : accounts) {
-            this.adapter.add(acc);
+        // Just subscribed, but no data available yet
+        if (accounts != null) {
+            this.adapter.clear();
+            for (Account acc : accounts) {
+                this.adapter.add(acc);
+            }
         }
     }
 
